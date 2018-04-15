@@ -15,7 +15,11 @@ public class StatisticsCalculator {
         if(usersCount > 0){
             averagePostsPerUser = (double)postsCount/usersCount;
             averageCommentsPerUser = (double)commentsCount/usersCount;
-            averageCommentsPerPost = (double)commentsCount/postsCount;
+            if(postsCount > 0){
+                averageCommentsPerPost = (double)commentsCount/postsCount;
+            } else {
+                averageCommentsPerPost = 0;
+            }
         } else {
             averagePostsPerUser = 0;
             averageCommentsPerUser = 0;

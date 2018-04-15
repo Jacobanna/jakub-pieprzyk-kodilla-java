@@ -33,7 +33,7 @@ public class StatisticsCalculatorTestSuite {
         //Given
         StatisticsCalculator statisticsCalculator1 = new StatisticsCalculator();
         Statistics statisticsMock1 = mock(Statistics.class);
-        List<String> dummyUserName1 = new ArrayList<String>();
+        List<String> dummyUserName1 = new ArrayList<>();
         int dummyPostsCount1 = 0;
         int dummyCommentsCount1 = 0;
         when(statisticsMock1.userNames()).thenReturn(dummyUserName1);
@@ -53,7 +53,7 @@ public class StatisticsCalculatorTestSuite {
         //Given
         StatisticsCalculator statisticsCalculator2 = new StatisticsCalculator();
         Statistics statisticsMock2 = mock(Statistics.class);
-        List<String> dummyUserName2= new ArrayList<String>();
+        List<String> dummyUserName2= new ArrayList<>();
         for(int i=0; i<100; i++){
             dummyUserName2.add("String #" + i);
         }
@@ -76,7 +76,7 @@ public class StatisticsCalculatorTestSuite {
         //Given
         StatisticsCalculator statisticsCalculator3 = new StatisticsCalculator();
         Statistics statisticsMock3 = mock(Statistics.class);
-        List<String> dummyUserName3 = new ArrayList<String>();
+        List<String> dummyUserName3 = new ArrayList<>();
         for(int i=0; i<100; i++){
             dummyUserName3.add("String #" + i);
         }
@@ -117,5 +117,26 @@ public class StatisticsCalculatorTestSuite {
         Assert.assertEquals(10,statisticsCalculator4.getAveragePostsPerUser(),0.1);
         Assert.assertEquals(0,statisticsCalculator4.getAverageCommentsPerUser(),0.1);
         Assert.assertEquals(0,statisticsCalculator4.getAverageCommentsPerPost(),0.1);
+
+        //FIFTH SET OF DATA
+        //Given
+        StatisticsCalculator statisticsCalculator5 = new StatisticsCalculator();
+        Statistics statisticsMock5 = mock(Statistics.class);
+        List<String> dummyUserName5 = new ArrayList<>();
+        dummyUserName5.add("String 1");
+        int dummyPostsCount5 = 0;
+        int dummyCommentsCount5 = 0;
+        when(statisticsMock5.userNames()).thenReturn(dummyUserName5);
+        when(statisticsMock5.postsCount()).thenReturn(dummyPostsCount5);
+        when(statisticsMock5.commentsCount()).thenReturn(dummyCommentsCount5);
+        //When
+        statisticsCalculator5.calculateAdvStatistics(statisticsMock5);
+        //Then
+        Assert.assertEquals(1,statisticsCalculator5.getUsersCount());
+        Assert.assertEquals(0,statisticsCalculator5.getPostsCount());
+        Assert.assertEquals(0,statisticsCalculator5.getCommentsCount());
+        Assert.assertEquals(0,statisticsCalculator5.getAveragePostsPerUser(),0.1);
+        Assert.assertEquals(0,statisticsCalculator5.getAverageCommentsPerUser(),0.1);
+        Assert.assertEquals(0,statisticsCalculator5.getAverageCommentsPerPost(),0.1);
     }
 }
