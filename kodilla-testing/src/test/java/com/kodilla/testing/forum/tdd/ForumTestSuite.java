@@ -10,7 +10,7 @@ public class ForumTestSuite {
 
     @BeforeClass
     public static void beforeAllTests(){
-        System.out.println("This is beggining of tests.");
+        System.out.println("This is beginning of tests.");
     }
 
     @AfterClass
