@@ -138,5 +138,25 @@ public class StatisticsCalculatorTestSuite {
         Assert.assertEquals(0,statisticsCalculator5.getAveragePostsPerUser(),0.1);
         Assert.assertEquals(0,statisticsCalculator5.getAverageCommentsPerUser(),0.1);
         Assert.assertEquals(0,statisticsCalculator5.getAverageCommentsPerPost(),0.1);
+
+        //SIXTH SET OF DATA
+        //Given
+        StatisticsCalculator statisticsCalculator6 = new StatisticsCalculator();
+        Statistics statisticsMock6 = mock(Statistics.class);
+        List<String> dummyUserName6 = new ArrayList<>();
+        int dummyPostsCount6 = 100;
+        int dummyCommentsCount6 = 200;
+        when(statisticsMock6.userNames()).thenReturn(dummyUserName6);
+        when(statisticsMock6.postsCount()).thenReturn(dummyPostsCount6);
+        when(statisticsMock6.commentsCount()).thenReturn(dummyCommentsCount6);
+        //When
+        statisticsCalculator6.calculateAdvStatistics(statisticsMock6);
+        //Then
+        Assert.assertEquals(0,statisticsCalculator6.getUsersCount());
+        Assert.assertEquals(100,statisticsCalculator6.getPostsCount());
+        Assert.assertEquals(200,statisticsCalculator6.getCommentsCount());
+        Assert.assertEquals(0,statisticsCalculator6.getAveragePostsPerUser(),0.1);
+        Assert.assertEquals(0,statisticsCalculator6.getAverageCommentsPerUser(),0.1);
+        Assert.assertEquals(2,statisticsCalculator6.getAverageCommentsPerPost(),0.1);
     }
 }
