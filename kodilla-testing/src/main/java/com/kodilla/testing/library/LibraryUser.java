@@ -1,16 +1,27 @@
 package com.kodilla.testing.library;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class LibraryUser {
-    String firstName;
-    String lastName;
-    String peselId;
+    private String firstName;
+    private String lastName;
+    private String peselId;
+    private List<Book> rentedBooks = new ArrayList<>();
 
     public LibraryUser(String firstName, String lastName, String peselId) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.peselId = peselId;
+    }
+
+    public void addRentedBook(Book rentedBook) {
+        rentedBooks.add(rentedBook);
+    }
+
+    public List<Book> getRentedBooks() {
+        return rentedBooks;
     }
 
     public String getFirstName() {

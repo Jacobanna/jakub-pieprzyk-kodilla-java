@@ -77,4 +77,55 @@ public class BookDirectoryTestSuite {
         assertEquals(0, theListOfBooks10.size());
         verify(libraryDatabaseMock, times(0)).listBooksWithCondition(anyString());
     }
+
+    @Test
+    public void testListBooksInHandsOf0BooksBorrowed(){
+        //Given
+        LibraryDatabase libraryDatabaseMock = mock(LibraryDatabase.class);
+        BookLibrary bookLibrary = new BookLibrary(libraryDatabaseMock);
+        List<Book> listOfBooks = new ArrayList<>();
+        LibraryUser libraryUser = new LibraryUser("name","lastName","peselID");
+        for (Book book : listOfBooks){
+            libraryUser.addRentedBook(book);
+        }
+        when(libraryDatabaseMock.listBooksInHandsOf(libraryUser)).thenReturn(listOfBooks);
+        //When
+        List<Book> listOfBooksInHandsOfLibraryUser = bookLibrary.listBooksInHandsOf(libraryUser);
+        //Then
+        assertEquals(0,listOfBooksInHandsOfLibraryUser.size());
+    }
+
+    @Test
+    public void testListBooksInHandsOf1BookBorrowed(){
+        //Given
+        LibraryDatabase libraryDatabaseMock = mock(LibraryDatabase.class);
+        BookLibrary bookLibrary = new BookLibrary(libraryDatabaseMock);
+        List<Book> listOfBooks = generateListOfNBooks(1);
+        LibraryUser libraryUser = new LibraryUser("name","lastName","peselID");
+        for (Book b : listOfBooks){
+            libraryUser.addRentedBook(b);
+        }
+        when(libraryDatabaseMock.listBooksInHandsOf(libraryUser)).thenReturn(listOfBooks);
+        //When
+        List<Book> listOfBooksInHandsOfLibraryUser = bookLibrary.listBooksInHandsOf(libraryUser);
+        //Then
+        assertEquals(1,listOfBooksInHandsOfLibraryUser.size());
+    }
+
+    @Test
+    public void testListBooksInHandsOf5BooksBorrowed(){
+        //Given
+        LibraryDatabase libraryDatabaseMock = mock(LibraryDatabase.class);
+        BookLibrary bookLibrary = new BookLibrary(libraryDatabaseMock);
+        List<Book> listOfBooks = generateListOfNBooks(5);
+        LibraryUser libraryUser = new LibraryUser("name","lastName","peselID");
+        for (Book b : listOfBooks){
+            libraryUser.addRentedBook(b);
+        }
+        when(libraryDatabaseMock.listBooksInHandsOf(libraryUser)).thenReturn(listOfBooks);
+        //When
+        List<Book> listOfBooksInHandsOfLibraryUser = bookLibrary.listBooksInHandsOf(libraryUser);
+        //Then
+        assertEquals(5,listOfBooksInHandsOfLibraryUser.size());
+    }
 }
