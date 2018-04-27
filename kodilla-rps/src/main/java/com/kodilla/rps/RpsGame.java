@@ -8,11 +8,11 @@ public class RpsGame {
     private Move computerSelection;
     private int numberOfPointsToWin;
     private int userPoints;
-    private int computerPlayerPoints;
+    private int computerPoints;
 
     public RpsGame() {
         this.userPoints = 0;
-        this.computerPlayerPoints = 0;
+        this.computerPoints = 0;
     }
 
     //TODO
@@ -31,16 +31,15 @@ public class RpsGame {
     }
 
     public void playGame(){
-        boolean end = false;
         userName = UserDialogs.getUserName();
         numberOfPointsToWin = UserDialogs.getNumberOfPointsWin();
-        while(userPoints < numberOfPointsToWin && computerPlayerPoints < numberOfPointsToWin){
+        while(userPoints < numberOfPointsToWin && computerPoints < numberOfPointsToWin){
             userSelection = UserDialogs.getUserSelection();
             //TODO
             //IF EXIT OR RESET END
             computerSelection = generateComputerSelection();
             if(computerWins(userSelection, computerSelection)){
-                computerPlayerPoints++;
+                computerPoints++;
             } else if (humanWins(userSelection, computerSelection)) {
                 userPoints++;
             } else {
