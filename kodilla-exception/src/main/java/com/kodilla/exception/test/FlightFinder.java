@@ -35,6 +35,10 @@ public class FlightFinder {
         this.possibleRoutes = routes;
     }
 
+    public HashMap<Flight, Boolean> getPossibleRoutes() {
+        return possibleRoutes;
+    }
+
     public boolean findFlight(Flight flight){
 
         for(Map.Entry<Flight, Boolean> entry : possibleRoutes.entrySet()){
