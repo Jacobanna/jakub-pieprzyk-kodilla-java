@@ -17,4 +17,5 @@ public final class World{
                 .reduce(BigDecimal.ZERO, (sum, current) -> sum.add(current));
     }
 
+
 }
