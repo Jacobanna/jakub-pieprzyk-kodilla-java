@@ -6,14 +6,16 @@ import java.util.Map;
 public class ProductDb {
     private Map<Product, Integer> productsDb = new HashMap<>();
 
+    //TODO
     public void addProduct(Product product, int amount) {
 //        for(Map.Entry<Product, Integer> entry: getProductsDb().entrySet()) {
 //
 //        }
-        System.out.println(amount + "x " + product + " added to database.");
+        System.out.println(amount + "x " + product.getName() + " added to database.");
         productsDb.put(product,amount);
     }
 
+    //TODO
     public boolean removeProduct(Product product, int amount) {
         for(Map.Entry<Product, Integer> entry: getProductsDb().entrySet()) {
             if(entry.getKey() == product) {

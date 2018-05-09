@@ -8,7 +8,7 @@ public class Product {
     private double price;
 
     public Product(String name, int idNumber, double price) {
-        this.name = name;
+        this.name = name.toLowerCase();
         this.idNumber = idNumber;
         this.price = price;
     }
