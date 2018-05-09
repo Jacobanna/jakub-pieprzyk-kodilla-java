@@ -6,24 +6,22 @@ import java.util.Map;
 public class ProductDb {
     private Map<Product, Integer> productsDb = new HashMap<>();
 
-    //TODO
     public void addProduct(Product product, int amount) {
-//        for(Map.Entry<Product, Integer> entry: getProductsDb().entrySet()) {
-//
-//        }
         System.out.println(amount + "x " + product.getName() + " added to database.");
         productsDb.put(product,amount);
     }
 
-    //TODO
     public boolean removeProduct(Product product, int amount) {
         for(Map.Entry<Product, Integer> entry: getProductsDb().entrySet()) {
-            if(entry.getKey() == product) {
-                if(entry.getValue() > amount) {
-                    System.out.println("Cannot remove " + amount + "x " +  product.getName() + " ,there are only " + entry.getValue() + " in the store.");
+            if(entry.getKey().equals(product)) {
+                if(entry.getValue() < amount) {
                     return false;
                 } else if(entry.getValue() == amount) {
-
+                    productsDb.remove(entry.getKey());
+                    return true;
+                } else {
+                    productsDb.put(product, entry.getValue()-amount);
+                    return true;
                 }
             }
         }

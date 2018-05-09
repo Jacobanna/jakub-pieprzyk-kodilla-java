@@ -4,9 +4,8 @@ public class Application {
     public static void main(String[] args) {
         ProductDb productDb = ProductDbInitializer.initialize();
         SupplierDb supplierDb = SupplierDbInitializer.initialize();
-
-        Supplier extra = supplierDb.getSupplierList().get(0);
-        extra.process(productDb);
-
+        supplierDb.getSupplierList().get(0).process(productDb);
+        supplierDb.getSupplierList().get(1).process(productDb);
+        supplierDb.getSupplierList().get(2).process(productDb);
     }
 }
