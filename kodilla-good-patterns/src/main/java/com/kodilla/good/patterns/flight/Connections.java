@@ -50,7 +50,7 @@ public class Connections {
     }
 
     public void allFlightsFrom(Airport airport) {
-        System.out.println("From: " + airport + " you can go to:");
+        System.out.println("FROM " + airport + " YOU CAN GO TO:");
         availableRoutes.entrySet().stream()
                 .filter(entry -> entry.getKey() == airport)
                 .flatMap(entry -> entry.getValue().stream())
@@ -58,7 +58,7 @@ public class Connections {
     }
 
     public void allFlightsTo(Airport airport) {
-        System.out.println("To: " + airport + " you can go from: ");
+        System.out.println("TO " + airport + " YOU CAN GO FROM:");
         availableRoutes.entrySet().stream()
                 .filter(entry -> entry.getValue().contains(airport))
                 .map(entry -> entry.getKey())

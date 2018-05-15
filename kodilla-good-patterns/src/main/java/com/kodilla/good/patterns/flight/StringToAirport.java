@@ -2,21 +2,20 @@ package com.kodilla.good.patterns.flight;
 
 import static com.kodilla.good.patterns.flight.Airport.*;
 
-public class StringToAirport {
-    public  static Airport stringToAirport(String string) {
+public interface StringToAirport {
+    public static Airport stringToAirport(String string) {
         String stringU = string.toUpperCase();
-        System.out.println(stringU);
-        if(stringU == "KRAKÓW") {
+        if(stringU.equals("KRAKÓW")) {
             return KRAKÓW;
-        } else if (stringU == "WROCŁAW") {
+        } else if (stringU.equals("WROCŁAW")) {
             return WROCŁAW;
-        } else if (stringU == "GDAŃSK") {
+        } else if (stringU.equals("GDAŃSK")) {
             return GDAŃSK;
-        } else if (stringU == "WARSZAWA") {
+        } else if (stringU.equals("WARSZAWA")) {
             return WARSZAWA;
-        } else if (stringU == "ŁÓDŹ") {
+        } else if (stringU.equals("ŁÓDŹ")) {
             return ŁÓDŹ;
-        } else if (stringU == "POZNAŃ") {
+        } else if (stringU.equals("POZNAŃ")) {
             return POZNAŃ;
         } else {
             return ERROR;
