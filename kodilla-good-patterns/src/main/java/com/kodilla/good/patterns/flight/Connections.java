@@ -1,5 +1,7 @@
 package com.kodilla.good.patterns.flight;
 
+import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
+
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -55,11 +57,34 @@ public class Connections {
                 .forEach(System.out::println);
     }
 
-    public void allFlightsTo() {
-
+    public void allFlightsTo(Airport airport) {
+        System.out.println("To: " + airport + " you can go from: ");
+        availableRoutes.entrySet().stream()
+                .filter(entry -> entry.getValue().contains(airport))
+                .map(entry -> entry.getKey())
+                .forEach(System.out::println);
     }
 
-    public void flightFromOneToAnother() {
-
+    public void flightFromOneToAnother(Airport start, Airport end) {
+        for (Map.Entry<Airport, List<Airport>> entry : availableRoutes.entrySet()) {
+            if (entry.getKey() == start) {
+                for (Airport possibleEnd : entry.getValue()) {
+                    if (possibleEnd == end) {
+                        System.out.println("FLIGHT FROM " + start + " TO " + end + " AVAILABLE DIRECTLY.");
+                    } else {
+                        List<Airport> availableFromStart = entry.getValue();
+                        for (Map.Entry<Airport, List<Airport>> anotherEntry : availableRoutes.entrySet()) {
+                            if (availableFromStart.contains(anotherEntry.getKey())) {
+                                for(Airport possibleEndSecondary : anotherEntry.getValue()) {
+                                    if(possibleEndSecondary == end) {
+                                        System.out.println("FLIGHT FROM" + start + " " + end + " IS AVAILABLE WITH CONNECTING FLIGHT AT " + anotherEntry.getKey());
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
 }

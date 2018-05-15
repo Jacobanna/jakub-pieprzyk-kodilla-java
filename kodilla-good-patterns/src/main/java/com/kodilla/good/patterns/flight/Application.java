@@ -8,19 +8,13 @@ import static com.kodilla.good.patterns.flight.Airport.*;
 
 public class Application {
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
+        Scanner scanner1 = new Scanner(System.in);
+        Scanner scanner2 = new Scanner(System.in);
         Connections connections = new Connections();
         int action;
+        String selection;
 
-//        Airport airport = KRAKÓW;
-//        System.out.println(airport);
-//        Map<Airport, List<Airport>> availableRoutes = connections.getAvailableRoutes();
-//        availableRoutes.entrySet().stream()
-//                .filter(entry -> entry.getKey() == KRAKÓW)
-//                .flatMap(entry -> entry.getValue().stream())
-//                .forEach(System.out::println);
-
-
+//        connections.flightFromOneToAnother(KRAKÓW, GDAŃSK);
 
         while (true) {
             System.out.println("AVAILABLE AIRPORTS: ");
@@ -30,14 +24,22 @@ public class Application {
             System.out.println("CHOOSE ACTION:");
             System.out.println("1. FIND ALL POSSIBLE ROUTES TO SELECTED AIRPORT,");
             System.out.println("2. FIND ALL POSSIBLE ROUTES FROM SELECTED AIRPORT,");
-            System.out.println("3. FIND CONNECTION FROM ONE AIRPORT TO ANOTHER,");
+            System.out.println("3. FIND CONNECTION FROM ONE AIRPORT TO ANOTHER (ONE CONNECTING FLIGHT MAX),");
             System.out.println("0. EXIT.");
-            action = scanner.nextInt();
+            action = scanner1.nextInt();
             switch (action) {
                 case 1:
                     System.out.print("SELECT AIRPORT: ");
-                    Airport selectedAirport = Airport.valueOf(scanner.nextLine().toUpperCase());
-                    connections.allFlightsFrom(selectedAirport);
+                    selection = scanner2.nextLine();
+                    System.out.println(selection);
+                    Airport selectedAirport = StringToAirport.stringToAirport(selection);
+                    System.out.println(selectedAirport);
+                    if(selectedAirport != ERROR) {
+                        connections.allFlightsFrom(selectedAirport);
+                    } else {
+                        System.out.println("AIRPORT NOT AVAILABLE. TRY AGAIN.");
+                        break;
+                    }
                     break;
                 case 2:
                     break;
@@ -47,7 +49,7 @@ public class Application {
                     return;
                 default:
                         System.out.println("NOT POSSIBLE, TRY AGAIN.");
-                        action = scanner.nextInt();
+                        action = scanner1.nextInt();
             }
         }
     }
