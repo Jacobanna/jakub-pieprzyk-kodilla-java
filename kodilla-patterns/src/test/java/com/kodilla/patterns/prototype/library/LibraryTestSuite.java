@@ -10,7 +10,7 @@ public class LibraryTestSuite {
     @Test
     public void testGetBooks() {
         //Given
-        Book book1 = new Book("Secrets of Alamo", "John Smith", LocalDate.now().minusYears(15));
+        Book book1 = new Book("Secrets of Alamo", "John Smith", LocalDate.of(1990,5,20));
         Book book2 = new Book("Secretaries and Directors", "Dilbert Michigan", LocalDate.now().minusYears(12));
         Book book3 = new Book("Secret life of programmers", "Steve Wolkowitz", LocalDate.now().minusYears(10));
         Book book4 = new Book("Secrets of Java", "Ian Tenewitch", LocalDate.now().minusYears(20));

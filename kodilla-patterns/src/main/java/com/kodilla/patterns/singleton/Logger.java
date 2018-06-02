@@ -10,6 +10,7 @@ public final class Logger {
 
     public static Logger getInstance() {
         if(loggerInstance == null) {
+            //semafor
             synchronized (Logger.class) {
                 if(loggerInstance == null) {
                     loggerInstance = new Logger();
