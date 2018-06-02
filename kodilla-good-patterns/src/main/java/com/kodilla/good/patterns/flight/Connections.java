@@ -15,35 +15,35 @@ public class Connections {
     private Map<Airport, List<Airport>> availableRoutes = new HashMap<>();
 
     public Connections() {
-        List<Airport> krakówList = new LinkedList<>();
-        krakówList.add(POZNAŃ);
-        krakówList.add(ŁÓDŹ);
-        krakówList.add(WARSZAWA);
-        List<Airport> poznańList = new LinkedList<>();
-        poznańList.add(KRAKÓW);
-        poznańList.add(GDAŃSK);
-        poznańList.add(ŁÓDŹ);
-        List<Airport> łódźList = new LinkedList<>();
-        łódźList.add(KRAKÓW);
-        łódźList.add(POZNAŃ);
-        łódźList.add(WARSZAWA);
+        List<Airport> krakowList = new LinkedList<>();
+        krakowList.add(POZNAN);
+        krakowList.add(LODZ);
+        krakowList.add(WARSZAWA);
+        List<Airport> poznanList = new LinkedList<>();
+        poznanList.add(KRAKOW);
+        poznanList.add(GDANSK);
+        poznanList.add(LODZ);
+        List<Airport> lodzList = new LinkedList<>();
+        lodzList.add(KRAKOW);
+        lodzList.add(POZNAN);
+        lodzList.add(WARSZAWA);
         List<Airport> warszawaList = new LinkedList<>();
-        warszawaList.add(KRAKÓW);
-        warszawaList.add(ŁÓDŹ);
-        warszawaList.add(GDAŃSK);
-        List<Airport> gdańskList = new LinkedList<>();
-        gdańskList.add(POZNAŃ);
-        gdańskList.add(WARSZAWA);
-        gdańskList.add(WROCŁAW);
-        List<Airport> wrocławList = new LinkedList<>();
-        wrocławList.add(GDAŃSK);
+        warszawaList.add(KRAKOW);
+        warszawaList.add(LODZ);
+        warszawaList.add(GDANSK);
+        List<Airport> gdanskList = new LinkedList<>();
+        gdanskList.add(POZNAN);
+        gdanskList.add(WARSZAWA);
+        gdanskList.add(WROCLAW);
+        List<Airport> wroclawList = new LinkedList<>();
+        wroclawList.add(GDANSK);
 
-        availableRoutes.put(KRAKÓW, krakówList);
-        availableRoutes.put(POZNAŃ, poznańList);
-        availableRoutes.put(ŁÓDŹ, łódźList);
+        availableRoutes.put(KRAKOW, krakowList);
+        availableRoutes.put(POZNAN, poznanList);
+        availableRoutes.put(LODZ, lodzList);
         availableRoutes.put(WARSZAWA, warszawaList);
-        availableRoutes.put(GDAŃSK, gdańskList);
-        availableRoutes.put(WROCŁAW, wrocławList);
+        availableRoutes.put(GDANSK, gdanskList);
+        availableRoutes.put(WROCLAW, wroclawList);
     }
 
     public Map<Airport, List<Airport>> getAvailableRoutes() {

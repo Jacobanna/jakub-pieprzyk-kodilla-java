@@ -16,8 +16,6 @@ public class Application {
         int action;
         String selection;
 
-//        connections.flightFromOneToAnother(KRAKÓW, GDAŃSK);
-
         while (true) {
             System.out.println("\nAVAILABLE AIRPORTS: ");
             for (Map.Entry<Airport, List<Airport>> entry : connections.getAvailableRoutes().entrySet()) {
