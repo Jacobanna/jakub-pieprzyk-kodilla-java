@@ -5,11 +5,18 @@ import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
+@NamedNativeQuery(
+        name = "Company.retrieveCompanyWith3FirstLettersAsRequested",
+        query = "SELECT * FROM COMPANIES" +
+                " WHERE SUBSTRING(COMPANY_NAME, 1, 3) = :SELECTED_STRING",
+        resultClass = Company.class
+)
 @Entity
 @Table(name = "COMPANIES")
 public class Company {
     private int id;
     private String name;
+    private String extractString;
     private List<Employee> employees = new ArrayList<>();
 
     public Company() {
@@ -28,6 +35,7 @@ public class Company {
     }
 
     @NotNull
+    @Column(name = "COMPANY_NAME")
     public String getName() {
         return name;
     }
@@ -35,6 +43,11 @@ public class Company {
     @ManyToMany(cascade = CascadeType.ALL, mappedBy = "companies")
     public List<Employee> getEmployees() {
         return employees;
+    }
+
+    @Column(name = "EXTRACT_STRING")
+    public String getExtractString() {
+        return extractString;
     }
 
     private void setId(int id) {
@@ -47,5 +60,9 @@ public class Company {
 
     private void setEmployees(List<Employee> employees) {
         this.employees = employees;
+    }
+
+    private void setExtractString(String extractString) {
+        this.extractString = extractString;
     }
 }
