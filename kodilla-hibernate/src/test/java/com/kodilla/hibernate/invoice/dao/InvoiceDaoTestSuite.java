@@ -21,6 +21,10 @@ import java.util.List;
 public class InvoiceDaoTestSuite {
     @Autowired
     InvoiceDao invoiceDao;
+    @Autowired
+    ProductDao productDao;
+    @Autowired
+    ItemDao itemDao;
 
     @Test
     public void testInvoiceDaoSave() {
@@ -43,8 +47,20 @@ public class InvoiceDaoTestSuite {
         items.add(speakersItem);
 
         Invoice invoice = new Invoice("06/06/18",items);
+        keyboardItem.setInvoice(invoice);
+        mouseItem.setInvoice(invoice);
+        speakersItem.setInvoice(invoice);
+        keyboard.getItems().add(keyboardItem);
+        mouse.getItems().add(mouseItem);
+        speakers.getItems().add(speakersItem);
         //When
+        productDao.save(keyboard);
+        productDao.save(mouse);
+        productDao.save(speakers);
         invoiceDao.save(invoice);
+        itemDao.save(keyboardItem);
+        itemDao.save(mouseItem);
+        itemDao.save(speakersItem);
         int id = invoice.getId();
         //Then
         Assert.assertNotEquals(0,id);

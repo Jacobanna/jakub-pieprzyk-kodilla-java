@@ -68,7 +68,7 @@ public class Item {
         this.id = id;
     }
 
-    private void setProduct(Product product) {
+    public void setProduct(Product product) {
         this.product = product;
     }
 
@@ -84,7 +84,7 @@ public class Item {
         this.value = value;
     }
 
-    private void setInvoice(Invoice invoice) {
+    public void setInvoice(Invoice invoice) {
         this.invoice = invoice;
     }
 }
