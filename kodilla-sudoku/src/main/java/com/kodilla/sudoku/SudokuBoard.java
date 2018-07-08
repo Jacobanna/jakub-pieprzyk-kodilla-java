@@ -29,7 +29,7 @@ public class SudokuBoard {
         }
     }
 
-    private void setElement(int row, int col, int val) {
+    public void setElement(int col, int row, int val) {
         sudokuRows.get(row).getSudokuElements().get(col).setValue(val);
     }
 
