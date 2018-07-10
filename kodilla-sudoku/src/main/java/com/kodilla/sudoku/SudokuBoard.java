@@ -30,13 +30,13 @@ public class SudokuBoard {
     }
 
     public void setElementFromDb(int col, int row, int val) {
-        sudokuRows.get(row).getSudokuElements().get(col).setValue(val);
-        sudokuRows.get(row).getSudokuElements().get(col).setLocked(true);
+        sudokuRows.get(row).getSudokuElementsFromRow().get(col).setValue(val);
+        sudokuRows.get(row).getSudokuElementsFromRow().get(col).setLocked(true);
     }
 
     public boolean setElementFromUser(int col, int row, int val) {
-        if(!sudokuRows.get(row).getSudokuElements().get(col).isLocked()) {
-            sudokuRows.get(row).getSudokuElements().get(col).setValue(val);
+        if(!sudokuRows.get(row).getSudokuElementsFromRow().get(col).isLocked()) {
+            sudokuRows.get(row).getSudokuElementsFromRow().get(col).setValue(val);
             return true;
         } else {
             return false;
@@ -48,45 +48,45 @@ public class SudokuBoard {
         String sudokuVisualization ="";
         for(int i = 0; i<=2; i++) {
             for (int j = 0; j<=2; j++) {
-                sudokuVisualization += sudokuRows.get(i).getSudokuElements().get(j).toString() + " ";
+                sudokuVisualization += sudokuRows.get(i).getSudokuElementsFromRow().get(j).toString() + " ";
             }
             sudokuVisualization += "| ";
             for (int j = 3; j<=5; j++) {
-                sudokuVisualization += sudokuRows.get(i).getSudokuElements().get(j).toString() + " ";
+                sudokuVisualization += sudokuRows.get(i).getSudokuElementsFromRow().get(j).toString() + " ";
             }
             sudokuVisualization += "| ";
             for (int j = 6; j<=8; j++) {
-                sudokuVisualization += sudokuRows.get(i).getSudokuElements().get(j).toString() + " ";
+                sudokuVisualization += sudokuRows.get(i).getSudokuElementsFromRow().get(j).toString() + " ";
             }
             sudokuVisualization += "\n";
         }
         sudokuVisualization += "- - - + - - - + - - -\n";
         for(int i = 3; i<=5; i++) {
             for (int j = 0; j<=2; j++) {
-                sudokuVisualization += sudokuRows.get(i).getSudokuElements().get(j).toString() + " ";
+                sudokuVisualization += sudokuRows.get(i).getSudokuElementsFromRow().get(j).toString() + " ";
             }
             sudokuVisualization += "| ";
             for (int j = 3; j<=5; j++) {
-                sudokuVisualization += sudokuRows.get(i).getSudokuElements().get(j).toString() + " ";
+                sudokuVisualization += sudokuRows.get(i).getSudokuElementsFromRow().get(j).toString() + " ";
             }
             sudokuVisualization += "| ";
             for (int j = 6; j<=8; j++) {
-                sudokuVisualization += sudokuRows.get(i).getSudokuElements().get(j).toString() + " ";
+                sudokuVisualization += sudokuRows.get(i).getSudokuElementsFromRow().get(j).toString() + " ";
             }
             sudokuVisualization += "\n";
         }
         sudokuVisualization += "- - - + - - - + - - -\n";
         for(int i = 6; i<=8; i++) {
             for (int j = 0; j<=2; j++) {
-                sudokuVisualization += sudokuRows.get(i).getSudokuElements().get(j).toString() + " ";
+                sudokuVisualization += sudokuRows.get(i).getSudokuElementsFromRow().get(j).toString() + " ";
             }
             sudokuVisualization += "| ";
             for (int j = 3; j<=5; j++) {
-                sudokuVisualization += sudokuRows.get(i).getSudokuElements().get(j).toString() + " ";
+                sudokuVisualization += sudokuRows.get(i).getSudokuElementsFromRow().get(j).toString() + " ";
             }
             sudokuVisualization += "| ";
             for (int j = 6; j<=8; j++) {
-                sudokuVisualization += sudokuRows.get(i).getSudokuElements().get(j).toString() + " ";
+                sudokuVisualization += sudokuRows.get(i).getSudokuElementsFromRow().get(j).toString() + " ";
             }
             sudokuVisualization += "\n";
         }

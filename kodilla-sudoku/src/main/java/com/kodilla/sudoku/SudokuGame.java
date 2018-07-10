@@ -1,5 +1,8 @@
 package com.kodilla.sudoku;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static com.kodilla.sudoku.Move.*;
 
 public class SudokuGame {
@@ -50,10 +53,10 @@ public class SudokuGame {
                 int col = Integer.parseInt(chosenMove.substring(0,1)) - 1;
                 int row = Integer.parseInt(chosenMove.substring(2,3)) - 1;
                 int val = Integer.parseInt(chosenMove.substring(4,5));
-                if(sudokuBoard.setElementFromUser(col,row,val)) {
+                if(isAllowedMove(col,row,val) && sudokuBoard.setElementFromUser(col,row,val)) {
                     System.out.println("Succesfully changed field.");
                 } else {
-                    System.out.println("Cannot change this field - it's part of start data.");
+                    System.out.println("Cannot change this field - it's part of starting data set.");
                 }
             } else {
                 //Should never happen
@@ -62,5 +65,38 @@ public class SudokuGame {
         }
     }
 
+    public boolean isAllowedMove(int col, int row, int val) {
+        int counter = 0;
 
+        List<SudokuElement> sudokuElementsFromRow = new ArrayList<>();
+        for (SudokuElement sudokuElement : sudokuBoard.getSudokuRows().get(row).getSudokuElementsFromRow()) {
+            sudokuElementsFromRow.add(sudokuElement);
+        }
+        for (SudokuElement sudokuElement : sudokuElementsFromRow) {
+            System.out.println("From row: " + sudokuElement.getValue());
+            if(val == sudokuElement.getValue()) {
+                counter++;
+            }
+        }
+
+        List<SudokuElement> sudokuElementsFromCol = new ArrayList<>();
+        for(int i = 0; i < 9; i++) {
+            sudokuElementsFromCol.add(sudokuBoard.getSudokuRows().get(i).getSudokuElementsFromRow().get(col));
+        }
+        for (SudokuElement sudokuElement : sudokuElementsFromCol) {
+            System.out.println("From col: " + sudokuElement.getValue());
+            if(val == sudokuElement.getValue()) {
+                counter++;
+            }
+        }
+
+        //TODO
+        //Need one more check - for field 3X3
+
+        if(counter == 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }
