@@ -3,9 +3,11 @@ package com.kodilla.sudoku;
 public class SudokuElement {
     public final static int EMPTY = -1;
     private int value;
+    private boolean locked;
 
     public SudokuElement(int value) {
-        this.value = value;
+            this.value = value;
+            this.locked = false;
     }
 
     public int getValue() {
@@ -14,6 +16,14 @@ public class SudokuElement {
 
     public void setValue(int value) {
         this.value = value;
+    }
+
+    public boolean isLocked() {
+        return locked;
+    }
+
+    public void setLocked(boolean locked) {
+        this.locked = locked;
     }
 
     @Override

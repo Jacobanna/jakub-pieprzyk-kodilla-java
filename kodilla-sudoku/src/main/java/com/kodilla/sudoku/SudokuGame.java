@@ -14,25 +14,10 @@ public class SudokuGame {
 
             if(userSelection == START_GAME) {
                 newGame();
-                while(true) {
-                    System.out.println(sudokuBoard);
-                    chosenMove = UserDialogs.getUserMove();
-                    if(chosenMove.equals("EXIT")) {
-                        userSelection = END_PROGRAM;
-                        break;
-                    } else if (chosenMove.equals("SUDOKU")) {
-                        //algorithm solving sudoku
-
-                    } else {
-                        int col = Integer.parseInt(chosenMove.substring(0,1));
-                        int row = Integer.parseInt(chosenMove.substring(2,3));
-                        int val = Integer.parseInt(chosenMove.substring(4,5));
-                        sudokuBoard.setElement(col,row,val);
-                    }
-                }
+                gameMechanics();
             } else if (userSelection == SANDBOX) {
                 sudokuBoard = new SudokuBoard();
-                System.out.println(sudokuBoard);
+                gameMechanics();
             } else if (userSelection == END_PROGRAM){
                 System.out.println("Thanks for playing.");
                 break;
@@ -49,6 +34,32 @@ public class SudokuGame {
 
     public void newGame() {
         sudokuBoard.fillFromString(SudokuRepository.getRandomSudoku());
+    }
+
+    public void gameMechanics() {
+        while(true) {
+            System.out.println(sudokuBoard);
+            chosenMove = UserDialogs.getUserMove();
+            if(chosenMove.equals("EXIT")) {
+                userSelection = END_PROGRAM;
+                break;
+            } else if (chosenMove.equals("SUDOKU")) {
+                //algorithm solving sudoku
+
+            } else if (UserDialogs.isSelectionCorrect(chosenMove)) {
+                int col = Integer.parseInt(chosenMove.substring(0,1)) - 1;
+                int row = Integer.parseInt(chosenMove.substring(2,3)) - 1;
+                int val = Integer.parseInt(chosenMove.substring(4,5));
+                if(sudokuBoard.setElementFromUser(col,row,val)) {
+                    System.out.println("Succesfully changed field.");
+                } else {
+                    System.out.println("Cannot change this field - it's part of start data.");
+                }
+            } else {
+                //Should never happen
+                System.out.println("ERROR");
+            }
+        }
     }
 
 

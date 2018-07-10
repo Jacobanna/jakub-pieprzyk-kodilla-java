@@ -21,7 +21,7 @@ public class SudokuBoard {
             for(int col = 0; col<9; col++) {
                 try {
                     int val = Integer.parseInt(sudoku.substring(row*9 + col, row*9 + col+1));
-                    setElement(row, col, val);
+                    setElementFromDb(row, col, val);
                 } catch (Exception e) {
 
                 }
@@ -29,8 +29,18 @@ public class SudokuBoard {
         }
     }
 
-    public void setElement(int col, int row, int val) {
+    public void setElementFromDb(int col, int row, int val) {
         sudokuRows.get(row).getSudokuElements().get(col).setValue(val);
+        sudokuRows.get(row).getSudokuElements().get(col).setLocked(true);
+    }
+
+    public boolean setElementFromUser(int col, int row, int val) {
+        if(!sudokuRows.get(row).getSudokuElements().get(col).isLocked()) {
+            sudokuRows.get(row).getSudokuElements().get(col).setValue(val);
+            return true;
+        } else {
+            return false;
+        }
     }
 
     @Override

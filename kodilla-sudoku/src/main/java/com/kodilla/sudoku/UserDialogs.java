@@ -12,7 +12,6 @@ public class UserDialogs {
         System.out.println("2. SANDBOX");
         System.out.println("3. END PROGRAM");
         int input = 0;
-
         while(input == 0) {
             try {
                 input = Integer.parseInt(scanner.nextLine());
@@ -38,19 +37,47 @@ public class UserDialogs {
 
     public static String getUserMove() {
         Scanner scanner = new Scanner(System.in);
-        System.out.println("1. Choose number in format column,row,value (e.g. 2,4,6)");
+        System.out.println("1. Choose number in format column,row,value (e.g. 2,4,6) - values from 1 to 9.");
         System.out.println("2. Write SUDOKU to solve current game");
         System.out.println("3. Write EXIT to end program");
-        String input = scanner.nextLine().toUpperCase();
 
-        //TODO
-        //input == "2,4,6" is placeholder, need function to check all possible arguments
-        if (input == "2,4,6" || input == "SUDOKU" || input == "EXIT") {
-            return input;
-        } else {
-            System.out.println("Option not available. Try again.");
+        while(true) {
+            String input = scanner.nextLine().toUpperCase();
+            if (isCorrectMove(input)) {
+                return input;
+            } else {
+                System.out.println("Make sure you wrote down column,row,value (e.g. 2,4,6), SUDOKU or EXIT. Try again.");
+            }
         }
+    }
 
-        return input;
+    public static boolean isCorrectMove(String string) {
+        if(string.equals("SUDOKU")) {
+            return true;
+        } else if (string.equals("EXIT")) {
+            return true;
+        } else if (isSelectionCorrect(string)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public static boolean isSelectionCorrect(String string) {
+        if(string.length() == 5) {
+            char firstChar = string.charAt(0);
+            char secondChar = string.charAt(1);
+            char thirdChar = string.charAt(2);
+            char fourthChar = string.charAt(3);
+            char fifthChar = string.charAt(4);
+            if( Character.isDigit(firstChar) && firstChar != '0' &&
+                secondChar == ',' &&
+                Character.isDigit(thirdChar) && thirdChar != '0' &&
+                fourthChar == ',' &&
+                Character.isDigit(fifthChar) && fifthChar != '0') {
+                return true;
+            }
+        }
+        return false;
     }
 }
