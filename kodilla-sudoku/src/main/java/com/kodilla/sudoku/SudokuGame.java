@@ -53,10 +53,17 @@ public class SudokuGame {
                 int col = Integer.parseInt(chosenMove.substring(0,1)) - 1;
                 int row = Integer.parseInt(chosenMove.substring(2,3)) - 1;
                 int val = Integer.parseInt(chosenMove.substring(4,5));
-                if(isAllowedMove(col,row,val) && sudokuBoard.setElementFromUser(col,row,val)) {
-                    System.out.println("Succesfully changed field.");
+                int temp = sudokuBoard.getSudokuRows().get(row).getSudokuElementsFromRow().get(col).getValue();
+                if(sudokuBoard.setElementFromUser(col,row,val)) {
+                    sudokuBoard.setElementFromUser(col,row,temp);
+                    if(isAllowedMove(col,row,val)) {
+                        sudokuBoard.setElementFromUser(col,row,val);
+                        System.out.println("Succesfully changed field.");
+                    } else {
+                        System.out.println("Try again - this number is already in the same column, row or 3X3 field.");
+                    }
                 } else {
-                    System.out.println("Cannot change this field - it's part of starting data set.");
+                    System.out.println("Try again - cannot change this field - it's part of starting data set.");
                 }
             } else {
                 //Should never happen
@@ -66,7 +73,6 @@ public class SudokuGame {
     }
 
     public boolean isAllowedMove(int col, int row, int val) {
-        int counter = 0;
 
         List<SudokuElement> sudokuElementsFromRow = new ArrayList<>();
         for (SudokuElement sudokuElement : sudokuBoard.getSudokuRows().get(row).getSudokuElementsFromRow()) {
@@ -75,7 +81,7 @@ public class SudokuGame {
         for (SudokuElement sudokuElement : sudokuElementsFromRow) {
             System.out.println("From row: " + sudokuElement.getValue());
             if(val == sudokuElement.getValue()) {
-                counter++;
+                return false;
             }
         }
 
@@ -86,17 +92,71 @@ public class SudokuGame {
         for (SudokuElement sudokuElement : sudokuElementsFromCol) {
             System.out.println("From col: " + sudokuElement.getValue());
             if(val == sudokuElement.getValue()) {
-                counter++;
+                return false;
             }
         }
 
-        //TODO
-        //Need one more check - for field 3X3
-
-        if(counter == 0) {
-            return true;
-        } else {
-            return false;
+        List<SudokuElement> sudokuElementsFrom3X3 = new ArrayList<>();
+        if((col == 0 || col == 1 || col == 2) && (row == 0 || row == 1 || row == 2)) {
+            for (int i = 0; i < 3 ; i++) {
+                sudokuElementsFrom3X3.add(sudokuBoard.getSudokuRows().get(i).getSudokuElementsFromRow().get(0));
+                sudokuElementsFrom3X3.add(sudokuBoard.getSudokuRows().get(i).getSudokuElementsFromRow().get(1));
+                sudokuElementsFrom3X3.add(sudokuBoard.getSudokuRows().get(i).getSudokuElementsFromRow().get(2));
+            }
+        } else if((col == 3 || col == 4 || col == 5) && (row == 0 || row == 1 || row == 2)) {
+            for (int i = 0; i < 3 ; i++) {
+                sudokuElementsFrom3X3.add(sudokuBoard.getSudokuRows().get(i).getSudokuElementsFromRow().get(3));
+                sudokuElementsFrom3X3.add(sudokuBoard.getSudokuRows().get(i).getSudokuElementsFromRow().get(4));
+                sudokuElementsFrom3X3.add(sudokuBoard.getSudokuRows().get(i).getSudokuElementsFromRow().get(5));
+            }
+        } else if((col == 6 || col == 7 || col == 8) && (row == 0 || row == 1 || row == 2)) {
+            for (int i = 0; i < 3 ; i++) {
+                sudokuElementsFrom3X3.add(sudokuBoard.getSudokuRows().get(i).getSudokuElementsFromRow().get(6));
+                sudokuElementsFrom3X3.add(sudokuBoard.getSudokuRows().get(i).getSudokuElementsFromRow().get(7));
+                sudokuElementsFrom3X3.add(sudokuBoard.getSudokuRows().get(i).getSudokuElementsFromRow().get(8));
+            }
+        } else if((col == 0 || col == 1 || col == 2) && (row == 3 || row == 4 || row == 5)) {
+            for (int i = 3; i < 6 ; i++) {
+                sudokuElementsFrom3X3.add(sudokuBoard.getSudokuRows().get(i).getSudokuElementsFromRow().get(0));
+                sudokuElementsFrom3X3.add(sudokuBoard.getSudokuRows().get(i).getSudokuElementsFromRow().get(1));
+                sudokuElementsFrom3X3.add(sudokuBoard.getSudokuRows().get(i).getSudokuElementsFromRow().get(2));
+            }
+        } else if((col == 3 || col == 4 || col == 5) && (row == 3 || row == 4 || row == 5)) {
+            for (int i = 3; i < 6 ; i++) {
+                sudokuElementsFrom3X3.add(sudokuBoard.getSudokuRows().get(i).getSudokuElementsFromRow().get(3));
+                sudokuElementsFrom3X3.add(sudokuBoard.getSudokuRows().get(i).getSudokuElementsFromRow().get(4));
+                sudokuElementsFrom3X3.add(sudokuBoard.getSudokuRows().get(i).getSudokuElementsFromRow().get(5));
+            }
+        } else if((col == 6 || col == 7 || col == 8) && (row == 3 || row == 4 || row == 5)) {
+            for (int i = 3; i < 6 ; i++) {
+                sudokuElementsFrom3X3.add(sudokuBoard.getSudokuRows().get(i).getSudokuElementsFromRow().get(6));
+                sudokuElementsFrom3X3.add(sudokuBoard.getSudokuRows().get(i).getSudokuElementsFromRow().get(7));
+                sudokuElementsFrom3X3.add(sudokuBoard.getSudokuRows().get(i).getSudokuElementsFromRow().get(8));
+            }
+        } else if((col == 0 || col == 1 || col == 2) && (row == 6 || row == 7 || row == 8)) {
+            for (int i = 6; i < 9 ; i++) {
+                sudokuElementsFrom3X3.add(sudokuBoard.getSudokuRows().get(i).getSudokuElementsFromRow().get(0));
+                sudokuElementsFrom3X3.add(sudokuBoard.getSudokuRows().get(i).getSudokuElementsFromRow().get(1));
+                sudokuElementsFrom3X3.add(sudokuBoard.getSudokuRows().get(i).getSudokuElementsFromRow().get(2));
+            }
+        } else if((col == 3 || col == 4 || col == 5) && (row == 6 || row == 7 || row == 8)) {
+            for (int i = 6; i < 9 ; i++) {
+                sudokuElementsFrom3X3.add(sudokuBoard.getSudokuRows().get(i).getSudokuElementsFromRow().get(3));
+                sudokuElementsFrom3X3.add(sudokuBoard.getSudokuRows().get(i).getSudokuElementsFromRow().get(4));
+                sudokuElementsFrom3X3.add(sudokuBoard.getSudokuRows().get(i).getSudokuElementsFromRow().get(5));
+            }
+        } else if((col == 6 || col == 7 || col == 8) && (row == 6 || row == 7 || row == 8)) {
+            for (int i = 6; i < 9 ; i++) {
+                sudokuElementsFrom3X3.add(sudokuBoard.getSudokuRows().get(i).getSudokuElementsFromRow().get(6));
+                sudokuElementsFrom3X3.add(sudokuBoard.getSudokuRows().get(i).getSudokuElementsFromRow().get(7));
+                sudokuElementsFrom3X3.add(sudokuBoard.getSudokuRows().get(i).getSudokuElementsFromRow().get(8));
+            }
         }
+        for (SudokuElement sudokuElement : sudokuElementsFrom3X3) {
+            if(val == sudokuElement.getValue()) {
+                return false;
+            }
+        }
+        return true;
     }
 }
