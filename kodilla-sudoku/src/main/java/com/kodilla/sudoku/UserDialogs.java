@@ -80,4 +80,9 @@ public class UserDialogs {
         }
         return false;
     }
+
+    public static void waitForInput() {
+        Scanner scanner = new Scanner(System.in);
+        scanner.nextLine();
+    }
 }

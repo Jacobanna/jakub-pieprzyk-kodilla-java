@@ -64,4 +64,9 @@ public class SudokuRepository {
         String randomSudoku = getCorrectSudokus().get((int)(Math.random()*getCorrectSudokus().size()));
         return randomSudoku;
     }
+
+    //Temporary for testing
+    public static String getAlmostDoneSudoku() {
+        return "6.3475918184.967355798316.4756348.91.3156984794871.3563951874624176.358986.954173";
+    }
 }

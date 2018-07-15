@@ -15,4 +15,8 @@ public class SudokuRow {
     public List<SudokuElement> getSudokuElementsFromRow() {
         return sudokuElements;
     }
+
+    public void setSudokuElements(List<SudokuElement> sudokuElements) {
+        this.sudokuElements = sudokuElements;
+    }
 }
