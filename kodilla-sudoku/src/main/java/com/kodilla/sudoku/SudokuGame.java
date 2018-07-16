@@ -179,6 +179,7 @@ public class SudokuGame {
                         if (sudokuBoard.getSudokuRows().get(row).getSudokuElementsFromRow().get(col).getPossibleValues().size() == 1) {
                             sudokuBoard.getSudokuRows().get(row).getSudokuElementsFromRow().get(col).setValue(sudokuBoard.getSudokuRows().get(row).getSudokuElementsFromRow().get(col).getPossibleValues().get(0));
                             atLeastOneSolved = true;
+                            continue;
                         }
                     }
                     //2
@@ -188,7 +189,7 @@ public class SudokuGame {
                         if(!usedValues.contains(possibleValue)) {
                             sudokuBoard.getSudokuRows().get(row).getSudokuElementsFromRow().get(col).setValue(possibleValue);
                             atLeastOneSolved = true;
-                            break;
+                            continue;
                         }
                     }
                 }
@@ -305,11 +306,8 @@ public class SudokuGame {
         //ROW
         for (int i = 0; i < 9; i++) {
             if (i != col) {
-                if(!usedValues.contains(sudokuBoard.getValueAt(i, row))) {
-                    usedValues.add(sudokuBoard.getValueAt(i, row));
-                }
+                usedValues.add(sudokuBoard.getValueAt(i, row));
                 for (Integer possibleValueFromOtherField : sudokuBoard.getPossibleValuesAt(i, row)) {
-                    if(!usedValues.contains(possibleValueFromOtherField))
                     usedValues.add(possibleValueFromOtherField);
                 }
             }
