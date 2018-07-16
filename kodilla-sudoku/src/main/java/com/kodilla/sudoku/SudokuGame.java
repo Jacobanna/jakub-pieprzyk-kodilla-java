@@ -10,6 +10,7 @@ public class SudokuGame {
     private Move userSelection;
     private String chosenMove;
     private SudokuBoard sudokuBoard = new SudokuBoard();
+    private List<SudokuBoardCopy> sudokuBoardCopies = new ArrayList<>();
 
     public void playGame() {
         while (true) {
@@ -169,9 +170,11 @@ public class SudokuGame {
     }
 
     public void solveSudoku() {
+        int counter;
         boolean atLeastOneSolved = true;
         while (atLeastOneSolved) {
             atLeastOneSolved = false;
+            counter = 0;
             for (int row = 0; row < 9; row++) {
                 for (int col = 0; col < 9; col++) {
                     //1
@@ -180,6 +183,7 @@ public class SudokuGame {
                         if (sudokuBoard.getSudokuRows().get(row).getSudokuElementsFromRow().get(col).getPossibleValues().size() == 1) {
                             sudokuBoard.getSudokuRows().get(row).getSudokuElementsFromRow().get(col).setValue(sudokuBoard.getSudokuRows().get(row).getSudokuElementsFromRow().get(col).getPossibleValues().get(0));
                             atLeastOneSolved = true;
+                            counter++;
                             continue;
                         }
                     }
@@ -189,13 +193,35 @@ public class SudokuGame {
                         if(!usedValues.contains(possibleValue)) {
                             sudokuBoard.getSudokuRows().get(row).getSudokuElementsFromRow().get(col).setValue(possibleValue);
                             atLeastOneSolved = true;
+                            counter++;
                             continue;
                         }
                     }
                 }
             }
+            if(counter == 0) {
+                if(!sudokuBoard.isSudokuSolved()) {
+                    try {
+                        outer:
+                        for (int row = 0; row < 9; row++) {
+                            inner:
+                            for (int col = 0; col < 9; col++) {
+                                if (sudokuBoard.getValueAt(col, row) == -1) {
+                                    Integer value = sudokuBoard.getSudokuRows().get(row).getSudokuElementsFromRow().get(col).getPossibleValues().get(0);
+                                    sudokuBoard.getSudokuRows().get(row).getSudokuElementsFromRow().get(col).setValue(value);
+                                    atLeastOneSolved = true;
+                                    SudokuBoardCopy sudokuBoardCopy = new SudokuBoardCopy(sudokuBoard.deepCopy(), row, col, sudokuBoard.getValueAt(col, row));
+                                    sudokuBoardCopies.add(sudokuBoardCopy);
+                                    break outer;
+                                }
+                            }
+                        }
+                    } catch (CloneNotSupportedException e) {
+                        System.out.println("Clone not supported exception.");
+                    }
+                }
+            }
         }
-        //czy sudoku rozwiazane, jesli nie zgadywanie
     }
 
     private void removePossibleValues(int col, int row) {
