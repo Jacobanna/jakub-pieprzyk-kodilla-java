@@ -86,6 +86,10 @@ public class SudokuBoard extends Prototype {
         return getSudokuRows().get(row).getSudokuElementsFromRow().get(col).getValue();
     }
 
+    public List<Integer> getPossibleValuesAt(int col, int row) {
+        return getSudokuRows().get(row).getSudokuElementsFromRow().get(col).getPossibleValues();
+    }
+
     public void removeValueFromPossibleAt(int col, int row, Integer val) {
         getSudokuRows().get(row).getSudokuElementsFromRow().get(col).removePossibleValue(val);
     }
