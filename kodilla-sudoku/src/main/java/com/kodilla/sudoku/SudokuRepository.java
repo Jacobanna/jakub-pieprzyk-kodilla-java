@@ -69,4 +69,9 @@ public class SudokuRepository {
     public static String getAlmostDoneSudoku() {
         return "6.3475918184.967355798316.4756348.91.3156984794871.3563951874624176.358986.954173";
     }
+
+    //Temporary for testing
+    public static String getSpecificSudoku() {
+        return "53..7....6..195....98....6.8...6...34..8.3..17...2...6.6....28....419..5....8..79";
+    }
 }

@@ -19,8 +19,9 @@ public class SudokuGame {
             if (userSelection == START_GAME) {
                 //TEST
 //                sudokuBoard.fillFromString(SudokuRepository.getAlmostDoneSudoku());
+                sudokuBoard.fillFromString(SudokuRepository.getSpecificSudoku());
                 //CORRECT
-                newGame();
+//                newGame();
                 gameMechanics();
             } else if (userSelection == SANDBOX) {
                 sudokuBoard = new SudokuBoard();
@@ -184,7 +185,6 @@ public class SudokuGame {
                     }
                     //2
                     List<Integer> usedValues = getPossibleValues(col, row);
-                    System.out.println(usedValues);
                     for (Integer possibleValue : sudokuBoard.getSudokuRows().get(row).getSudokuElementsFromRow().get(col).getPossibleValues()) {
                         if(!usedValues.contains(possibleValue)) {
                             sudokuBoard.getSudokuRows().get(row).getSudokuElementsFromRow().get(col).setValue(possibleValue);
