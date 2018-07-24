@@ -9,7 +9,7 @@ import static com.kodilla.sudoku.Move.*;
 public class SudokuGame {
     private Move userSelection;
     private String chosenMove;
-    private SudokuBoard sudokuBoard = new SudokuBoard();
+    private SudokuBoard sudokuBoard;
     private List<SudokuBoardCopy> sudokuBoardCopies = new ArrayList<>();
 
     public void playGame() {
@@ -18,10 +18,8 @@ public class SudokuGame {
             userSelection = UserDialogs.getUserSelection();
 
             if (userSelection == START_GAME) {
-                //TEST
-//                sudokuBoard.fillFromString(SudokuRepository.getAlmostDoneSudoku());
+                sudokuBoard = new SudokuBoard();
                 sudokuBoard.fillFromString(SudokuRepository.getSpecificSudoku());
-                //CORRECT
 //                newGame();
                 gameMechanics();
             } else if (userSelection == SANDBOX) {
@@ -34,7 +32,6 @@ public class SudokuGame {
                 //Should never happen
                 System.out.println("ERROR");
             }
-
             if (userSelection == END_PROGRAM) {
                 break;
             }
@@ -42,10 +39,15 @@ public class SudokuGame {
     }
 
     public void gameMechanics() {
+        boolean isCorrectData = true;
         while (true) {
             System.out.println(sudokuBoard);
             if (sudokuBoard.isSudokuSolved()) {
                 System.out.println("Congratulations, sudoku solved!");
+                UserDialogs.waitForInput();
+                break;
+            }
+            if (!isCorrectData) {
                 UserDialogs.waitForInput();
                 break;
             }
@@ -54,7 +56,11 @@ public class SudokuGame {
                 userSelection = END_PROGRAM;
                 break;
             } else if (chosenMove.equals("SUDOKU")) {
-                solveSudoku();
+                boolean solved = solveSudoku(sudokuBoard);
+                if (!solved) {
+                    isCorrectData = false;
+                    System.out.println("Data for sudoku is incorrect. Try different sudoku.");
+                }
 
             } else if (UserDialogs.isSelectionCorrect(chosenMove)) {
                 int col = Integer.parseInt(chosenMove.substring(0, 1)) - 1;
@@ -65,7 +71,7 @@ public class SudokuGame {
                     sudokuBoard.setElementFromUser(col, row, temp);
                     if (isAllowedMove(col, row, val)) {
                         sudokuBoard.setElementFromUser(col, row, val);
-                        System.out.println("Succesfully changed field.");
+                        System.out.println("Successfully changed field.");
                     } else {
                         System.out.println("Try again - this number is already in the same column, row or 3X3 field.");
                     }
@@ -169,65 +175,82 @@ public class SudokuGame {
         return true;
     }
 
-    //public boolean solveSudoku(SudokuBoard sudokuBoard) czy jest rozwiazane
-    public void solveSudoku() {
+    public boolean solveSudoku(SudokuBoard sudokuBoard) {
         int counter;
+        boolean solved = false;
         boolean atLeastOneSolved = true;
-        while (atLeastOneSolved) {
-            atLeastOneSolved = false;
-            counter = 0;
-            for (int row = 0; row < 9; row++) {
-                for (int col = 0; col < 9; col++) {
-                    //1
-                    if (sudokuBoard.getSudokuRows().get(row).getSudokuElementsFromRow().get(col).getValue() == -1) {
-                        removePossibleValues(col, row);
-                        if (sudokuBoard.getSudokuRows().get(row).getSudokuElementsFromRow().get(col).getPossibleValues().size() == 1) {
-                            sudokuBoard.getSudokuRows().get(row).getSudokuElementsFromRow().get(col).setValue(sudokuBoard.getSudokuRows().get(row).getSudokuElementsFromRow().get(col).getPossibleValues().get(0));
-                            atLeastOneSolved = true;
-                            counter++;
-                            continue;
-                        }
-                    }
-                    //2
-                    List<Integer> usedValues = getPossibleValues(col, row);
-                    for (Integer possibleValue : sudokuBoard.getSudokuRows().get(row).getSudokuElementsFromRow().get(col).getPossibleValues()) {
-                        if(!usedValues.contains(possibleValue)) {
-                            sudokuBoard.getSudokuRows().get(row).getSudokuElementsFromRow().get(col).setValue(possibleValue);
-                            atLeastOneSolved = true;
-                            counter++;
-                            continue;
-                        }
-                    }
-                }
+        while (true) {
+            if (sudokuBoard.isSudokuSolved()) {
+                return true;
             }
-            if(counter == 0) {
-                if(!sudokuBoard.isSudokuSolved()) {
-                    try {
-                        outer:
-                        for (int row = 0; row < 9; row++) {
-                            inner:
-                            for (int col = 0; col < 9; col++) {
-                                if (sudokuBoard.getValueAt(col, row) == -1) {
-                                    for(int pos = 0; pos < sudokuBoard.getSudokuRows().get(row).getSudokuElementsFromRow().get(col).getPossibleValues().size(); pos++) {
-                                        Integer value = sudokuBoard.getSudokuRows().get(row).getSudokuElementsFromRow().get(col).getPossibleValues().get(pos);
-                                        sudokuBoard.getSudokuRows().get(row).getSudokuElementsFromRow().get(col).setValue(value);
-                                        solveSudoku(); //z nowym boardem
-                                    }
-//                                    Integer value = sudokuBoard.getSudokuRows().get(row).getSudokuElementsFromRow().get(col).getPossibleValues().get(0);
-//                                    sudokuBoard.getSudokuRows().get(row).getSudokuElementsFromRow().get(col).setValue(value);
-//                                    atLeastOneSolved = true;
-//                                    SudokuBoardCopy sudokuBoardCopy = new SudokuBoardCopy(sudokuBoard.deepCopy(), row, col, sudokuBoard.getValueAt(col, row));
-//                                    sudokuBoardCopies.add(sudokuBoardCopy);
-//                                    break outer;
-                                }
+            while (atLeastOneSolved) {
+                atLeastOneSolved = false;
+                counter = 0;
+                for (int row = 0; row < 9; row++) {
+                    for (int col = 0; col < 9; col++) {
+                        //1
+                        if (sudokuBoard.getSudokuRows().get(row).getSudokuElementsFromRow().get(col).getValue() == -1) {
+                            removePossibleValues(col, row);
+                            if (sudokuBoard.getSudokuRows().get(row).getSudokuElementsFromRow().get(col).getPossibleValues().size() == 1) {
+                                sudokuBoard.getSudokuRows().get(row).getSudokuElementsFromRow().get(col).setValue(sudokuBoard.getSudokuRows().get(row).getSudokuElementsFromRow().get(col).getPossibleValues().get(0));
+                                atLeastOneSolved = true;
+                                counter++;
+                                continue;
                             }
                         }
-                    } catch (CloneNotSupportedException e) {
-                        System.out.println("Clone not supported exception.");
+                        //2
+                        List<Integer> usedValues = getPossibleValues(col, row);
+                        for (Integer possibleValue : sudokuBoard.getSudokuRows().get(row).getSudokuElementsFromRow().get(col).getPossibleValues()) {
+                            if (!usedValues.contains(possibleValue)) {
+                                sudokuBoard.getSudokuRows().get(row).getSudokuElementsFromRow().get(col).setValue(possibleValue);
+                                atLeastOneSolved = true;
+                                counter++;
+                                continue;
+                            }
+                        }
+                    }
+                }
+                if (counter == 0) {
+                    if (!sudokuBoard.isSudokuSolved()) {
+                        try {
+                            for (int row = 0; row < 9; row++) {
+                                for (int col = 0; col < 9; col++) {
+                                    if (sudokuBoard.getValueAt(col, row) == -1) {
+                                        for (int pos = 0; pos < sudokuBoard.getSudokuRows().get(row).getSudokuElementsFromRow().get(col).getPossibleValues().size(); pos++) {
+                                            Integer value = sudokuBoard.getSudokuRows().get(row).getSudokuElementsFromRow().get(col).getPossibleValues().get(pos);
+                                            sudokuBoard.getSudokuRows().get(row).getSudokuElementsFromRow().get(col).setValue(value);
+                                            atLeastOneSolved = true;
+                                            SudokuBoardCopy sudokuBoardCopy = new SudokuBoardCopy(sudokuBoard.deepCopy(), row, col, sudokuBoard.getValueAt(col, row));
+                                            sudokuBoardCopies.add(sudokuBoardCopy);
+                                            solved = solveSudoku(sudokuBoard);
+                                        }
+                                    }
+                                }
+                            }
+                        } catch (CloneNotSupportedException e) {
+                            System.out.println("Clone not supported exception.");
+                        }
                     }
                 }
             }
-            // return czy rozwiazany
+            // Solved
+            if (solved) {
+                return true;
+            }
+            // Not solved, not available possible values
+            else if (getPossibleValuesFromBoard().size() == 0) {
+                return false;
+            }
+            // Not solved, available possible values
+            else {
+                SudokuBoardCopy sudokuBoardCopy = sudokuBoardCopies.get(sudokuBoardCopies.size()-1);
+                sudokuBoard = sudokuBoardCopy.getSudokuBoard();
+                int row = sudokuBoardCopy.getRow();
+                int col = sudokuBoardCopy.getCol();
+//                Not required, this value is removed from possible in setValue() from SudokuElement;
+//                int val = sudokuBoardCopy.getGuessedValue();
+                sudokuBoard.getSudokuRows().get(row).getSudokuElementsFromRow().get(col).setValue(-1);
+            }
         }
     }
 
@@ -333,7 +356,6 @@ public class SudokuGame {
         }
     }
 
-
     private List<Integer> getPossibleValues(int col, int row) {
         List<Integer> usedValues = new ArrayList<>();
         //ROW
@@ -438,5 +460,17 @@ public class SudokuGame {
             }
         }
         return usedValues;
+    }
+
+    private List<Integer> getPossibleValuesFromBoard() {
+        List<Integer> possibleValues = new ArrayList<>();
+        for (int row = 0; row < 9; row++) {
+            for (int col = 0; col < 9; col++) {
+                for (Integer possibleValue : sudokuBoard.getPossibleValuesAt(col, row)) {
+                    possibleValues.add(possibleValue);
+                }
+            }
+        }
+        return possibleValues;
     }
 }

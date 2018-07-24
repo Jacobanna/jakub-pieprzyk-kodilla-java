@@ -30,6 +30,7 @@ public class SudokuElement {
 
     public void setValue(int value) {
         this.value = value;
+        possibleValues.remove(new Integer(value));
     }
 
     public boolean isLocked() {

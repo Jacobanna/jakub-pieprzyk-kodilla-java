@@ -72,6 +72,6 @@ public class SudokuRepository {
 
     //Temporary for testing
     public static String getSpecificSudoku() {
-        return "53..7....6..195....98....6.8...6...34..8.3..17...2...6.6....28....419..5....8..79";
+        return ".1.....6.....68.....8...7...4.3....73....2.4.2...14.56.....782.1..8.3..4.74...5..";
     }
 }
