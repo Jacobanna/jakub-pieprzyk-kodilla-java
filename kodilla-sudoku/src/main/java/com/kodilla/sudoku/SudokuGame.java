@@ -169,6 +169,7 @@ public class SudokuGame {
         return true;
     }
 
+    //public boolean solveSudoku(SudokuBoard sudokuBoard) czy jest rozwiazane
     public void solveSudoku() {
         int counter;
         boolean atLeastOneSolved = true;
@@ -207,12 +208,17 @@ public class SudokuGame {
                             inner:
                             for (int col = 0; col < 9; col++) {
                                 if (sudokuBoard.getValueAt(col, row) == -1) {
-                                    Integer value = sudokuBoard.getSudokuRows().get(row).getSudokuElementsFromRow().get(col).getPossibleValues().get(0);
-                                    sudokuBoard.getSudokuRows().get(row).getSudokuElementsFromRow().get(col).setValue(value);
-                                    atLeastOneSolved = true;
-                                    SudokuBoardCopy sudokuBoardCopy = new SudokuBoardCopy(sudokuBoard.deepCopy(), row, col, sudokuBoard.getValueAt(col, row));
-                                    sudokuBoardCopies.add(sudokuBoardCopy);
-                                    break outer;
+                                    for(int pos = 0; pos < sudokuBoard.getSudokuRows().get(row).getSudokuElementsFromRow().get(col).getPossibleValues().size(); pos++) {
+                                        Integer value = sudokuBoard.getSudokuRows().get(row).getSudokuElementsFromRow().get(col).getPossibleValues().get(pos);
+                                        sudokuBoard.getSudokuRows().get(row).getSudokuElementsFromRow().get(col).setValue(value);
+                                        solveSudoku(); //z nowym boardem
+                                    }
+//                                    Integer value = sudokuBoard.getSudokuRows().get(row).getSudokuElementsFromRow().get(col).getPossibleValues().get(0);
+//                                    sudokuBoard.getSudokuRows().get(row).getSudokuElementsFromRow().get(col).setValue(value);
+//                                    atLeastOneSolved = true;
+//                                    SudokuBoardCopy sudokuBoardCopy = new SudokuBoardCopy(sudokuBoard.deepCopy(), row, col, sudokuBoard.getValueAt(col, row));
+//                                    sudokuBoardCopies.add(sudokuBoardCopy);
+//                                    break outer;
                                 }
                             }
                         }
@@ -221,6 +227,7 @@ public class SudokuGame {
                     }
                 }
             }
+            // return czy rozwiazany
         }
     }
 
