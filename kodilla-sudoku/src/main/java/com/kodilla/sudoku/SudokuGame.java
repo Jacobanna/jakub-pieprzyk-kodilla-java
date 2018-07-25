@@ -222,7 +222,7 @@ public class SudokuGame {
                                             atLeastOneSolved = true;
                                             SudokuBoardCopy sudokuBoardCopy = new SudokuBoardCopy(sudokuBoard.deepCopy(), row, col, sudokuBoard.getValueAt(col, row));
                                             sudokuBoardCopies.add(sudokuBoardCopy);
-                                            solved = solveSudoku(sudokuBoard);
+                                            solveSudoku(sudokuBoard);
                                         }
                                     }
                                 }
@@ -234,7 +234,7 @@ public class SudokuGame {
                 }
             }
             // Solved
-            if (solved) {
+            if (sudokuBoard.isSudokuSolved()) {
                 return true;
             }
             // Not solved, not available possible values
