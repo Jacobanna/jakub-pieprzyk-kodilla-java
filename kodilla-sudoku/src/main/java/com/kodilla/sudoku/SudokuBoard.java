@@ -71,7 +71,7 @@ public class SudokuBoard extends Prototype {
         for(int i = 0; i < 9; i++) {
             List<SudokuElement> tempSudokuElements = new ArrayList<>();
             for (int j = 0; j < 9; j++) {
-                tempSudokuElements.add(sudokuRows.get(i).getSudokuElementsFromRow().get(j));
+                tempSudokuElements.add(new SudokuElement(sudokuRows.get(i).getSudokuElementsFromRow().get(j)));
             }
             SudokuRow tempSudokuRow = new SudokuRow();
             tempSudokuRow.setSudokuElements(tempSudokuElements);

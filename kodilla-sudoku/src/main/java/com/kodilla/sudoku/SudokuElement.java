@@ -20,6 +20,14 @@ public class SudokuElement {
             }
     }
 
+    public SudokuElement(SudokuElement se) {
+        this.value = se.getValue();
+        this.locked = se.isLocked();
+        for (Integer value: se.getPossibleValues()) {
+            possibleValues.add(value);
+        }
+    }
+
     public int getValue() {
         return value;
     }
@@ -40,6 +48,8 @@ public class SudokuElement {
     public void setLocked(boolean locked) {
         this.locked = locked;
     }
+
+
 
     public void removePossibleValue(int value) {
         possibleValues.remove(new Integer(value));

@@ -190,7 +190,7 @@ public class SudokuGame {
                     for (int col = 0; col < 9; col++) {
                         //1
                         if (sudokuBoard.getSudokuRows().get(row).getSudokuElementsFromRow().get(col).getValue() == -1) {
-                            removePossibleValues(col, row);
+                            removePossibleValues(col, row, sudokuBoard);
                             if (sudokuBoard.getSudokuRows().get(row).getSudokuElementsFromRow().get(col).getPossibleValues().size() == 1) {
                                 sudokuBoard.getSudokuRows().get(row).getSudokuElementsFromRow().get(col).setValue(sudokuBoard.getSudokuRows().get(row).getSudokuElementsFromRow().get(col).getPossibleValues().get(0));
                                 atLeastOneSolved = true;
@@ -199,7 +199,7 @@ public class SudokuGame {
                             }
                         }
                         //2
-                        List<Integer> usedValues = getPossibleValues(col, row);
+                        List<Integer> usedValues = getPossibleValues(col, row, sudokuBoard);
                         for (Integer possibleValue : sudokuBoard.getSudokuRows().get(row).getSudokuElementsFromRow().get(col).getPossibleValues()) {
                             if (!usedValues.contains(possibleValue)) {
                                 sudokuBoard.getSudokuRows().get(row).getSudokuElementsFromRow().get(col).setValue(possibleValue);
@@ -218,11 +218,15 @@ public class SudokuGame {
                                     if (sudokuBoard.getValueAt(col, row) == -1) {
                                         for (int pos = 0; pos < sudokuBoard.getSudokuRows().get(row).getSudokuElementsFromRow().get(col).getPossibleValues().size(); pos++) {
                                             Integer value = sudokuBoard.getSudokuRows().get(row).getSudokuElementsFromRow().get(col).getPossibleValues().get(pos);
-                                            sudokuBoard.getSudokuRows().get(row).getSudokuElementsFromRow().get(col).setValue(value);
                                             atLeastOneSolved = true;
-                                            SudokuBoardCopy sudokuBoardCopy = new SudokuBoardCopy(sudokuBoard.deepCopy(), row, col, sudokuBoard.getValueAt(col, row));
-                                            sudokuBoardCopies.add(sudokuBoardCopy);
-                                            solveSudoku(sudokuBoard);
+                                            SudokuBoard sudokuCopy = sudokuBoard.deepCopy();
+                                            sudokuCopy.getSudokuRows().get(row).getSudokuElementsFromRow().get(col).setValue(value);
+                                            System.out.println(sudokuCopy);
+                                            if(solveSudoku(sudokuCopy)) {
+                                                return true;
+                                            } else {
+                                                return false;
+                                            }
                                         }
                                     }
                                 }
@@ -238,24 +242,13 @@ public class SudokuGame {
                 return true;
             }
             // Not solved, not available possible values
-            else if (getPossibleValuesFromBoard().size() == 0) {
-                return false;
-            }
-            // Not solved, available possible values
             else {
-                SudokuBoardCopy sudokuBoardCopy = sudokuBoardCopies.get(sudokuBoardCopies.size()-1);
-//                sudokuBoardCopies.remove(sudokuBoardCopies.size()-1)
-                sudokuBoard = sudokuBoardCopy.getSudokuBoard();
-                int row = sudokuBoardCopy.getRow();
-                int col = sudokuBoardCopy.getCol();
-//                Not required, this value is removed from possible in setValue() from SudokuElement;
-//                int val = sudokuBoardCopy.getGuessedValue();
-                sudokuBoard.getSudokuRows().get(row).getSudokuElementsFromRow().get(col).setValue(-1);
+                return false;
             }
         }
     }
 
-    private void removePossibleValues(int col, int row) {
+    private void removePossibleValues(int col, int row, SudokuBoard sudokuBoard) {
         //ROW
         for (int n = 0; n < 9; n++) {
             Integer val = sudokuBoard.getValueAt(n, row);
@@ -357,7 +350,7 @@ public class SudokuGame {
         }
     }
 
-    private List<Integer> getPossibleValues(int col, int row) {
+    private List<Integer> getPossibleValues(int col, int row, SudokuBoard sudokuBoard) {
         List<Integer> usedValues = new ArrayList<>();
         //ROW
         for (int i = 0; i < 9; i++) {
