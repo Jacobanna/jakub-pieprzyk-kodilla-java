@@ -244,6 +244,7 @@ public class SudokuGame {
             // Not solved, available possible values
             else {
                 SudokuBoardCopy sudokuBoardCopy = sudokuBoardCopies.get(sudokuBoardCopies.size()-1);
+//                sudokuBoardCopies.remove(sudokuBoardCopies.size()-1)
                 sudokuBoard = sudokuBoardCopy.getSudokuBoard();
                 int row = sudokuBoardCopy.getRow();
                 int col = sudokuBoardCopy.getCol();
