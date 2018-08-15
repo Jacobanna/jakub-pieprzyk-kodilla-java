@@ -221,16 +221,14 @@ public class SudokuGame {
                                             atLeastOneSolved = true;
                                             SudokuBoard sudokuCopy = sudokuBoard.deepCopy();
                                             sudokuCopy.getSudokuRows().get(row).getSudokuElementsFromRow().get(col).setValue(value);
-                                            System.out.println(sudokuCopy);
                                             if(solveSudoku(sudokuCopy)) {
                                                 return true;
-                                            } else {
-                                                return false;
                                             }
                                         }
                                     }
                                 }
                             }
+                            return false;
                         } catch (CloneNotSupportedException e) {
                             System.out.println("Clone not supported exception.");
                         }
