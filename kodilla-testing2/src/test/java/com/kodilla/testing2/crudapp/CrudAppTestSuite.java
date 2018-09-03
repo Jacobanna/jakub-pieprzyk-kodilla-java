@@ -34,8 +34,11 @@ public class CrudAppTestSuite {
     @Test
     public void shouldCreateTrelloCard() throws InterruptedException {
         String taskName = createCrudAppTestTask();
+        System.out.println(taskName);
         sendTestTaskToTrello(taskName);
         assertTrue(checkTaskExistsInTrello(taskName));
+        System.out.println(taskName);
+        deleteCrudAppTestTask(taskName);
     }
 
     private boolean checkTaskExistsInTrello(String taskName) throws InterruptedException {
@@ -49,9 +52,9 @@ public class CrudAppTestSuite {
         Thread.sleep(2000);
 
         driverTrello.findElements(By.xpath("//a[@class=\"board-tile\"]")).stream()
-                .filter(aHref -> aHref.findElements(By.xpath(".//span[@title=\"Kodilla Application\"]")).size() > 0)
+                .filter(aHref -> aHref.findElements(By.xpath(".//div[@title=\"Kodilla Application\"]")).size() > 0)
                 .forEach(aHref -> aHref.click());
-        Thread.sleep(2000);
+        Thread.sleep(4000);
 
         result = driverTrello.findElements(By.xpath("//span")).stream()
                 .filter(theSpan -> theSpan.getText().contains(taskName))
@@ -98,5 +101,24 @@ public class CrudAppTestSuite {
         Thread.sleep(2000);
 
         return taskName;
+    }
+
+    //TERAZ USUWAM ZAWSZE PIERWSZY TASK NA LISCIE, A NIE TEN DODANY
+    private void deleteCrudAppTestTask(String taskName) throws InterruptedException {
+        driver.switchTo().alert().accept();
+
+        //Wait until page loads content
+        while (!driver.findElement(By.xpath("//select[1]")).isDisplayed()) ;
+
+        driver.findElements(By.xpath("//form[@class=\"datatable__row\"]")).stream()
+                .filter(anyForm ->
+                        anyForm.findElement(By.xpath(".//p[@class=\"datatable__field-value\"]"))
+                                .getText().equals(taskName))
+                .forEach(theForm -> {
+                    System.out.println(theForm.getText());
+                    WebElement deleteButton = theForm.findElement(By.xpath(".//button[4]"));
+                    deleteButton.click();
+                });
+        Thread.sleep(5000);
     }
 }
